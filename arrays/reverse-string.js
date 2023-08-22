@@ -10,4 +10,10 @@ function reverse(str) {
     return reversedStr.join("")
 }
 
+function reverse2(str) {
+    return str.split('').reverse().join('')
+}
+
+const reverse3 = str => [...str].reverse().join('')
+
 console.log(reverse("hello, world!"))
