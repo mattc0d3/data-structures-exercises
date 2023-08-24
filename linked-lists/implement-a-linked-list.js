@@ -28,7 +28,7 @@ class LinkedList {
         this.length++
         return this
     }
-    PrintList() {
+    printList() {
         const array = []
         let currentNode = this.head
         while (currentNode !== null) {
@@ -37,7 +37,7 @@ class LinkedList {
         }
         return array
     }
-    Insert(index, value) {
+    insert(index, value) {
         if (index >= this.length) {
             return this.append(value)
 
@@ -49,7 +49,8 @@ class LinkedList {
         const leader = this.traverseToIndex(index - 1)
         newNode.next = leader.next
         leader.next = newNode
-        return this.PrintList()
+        this.length++
+        return this.printList()
     }
     traverseToIndex(index) {
         let counter = 0
@@ -59,6 +60,12 @@ class LinkedList {
             counter++
         }
         return currentNode
+    }
+    remove(index) {
+        const leader = this.traverseToIndex(index - 1)
+        const nodeToRemove = leader.next
+        leader.next = nodeToRemove.next
+        this.length--
     }
 }
 
@@ -70,6 +77,107 @@ myLinkedList.append(7)
 console.log(myLinkedList)
 myLinkedList.prepend(4)
 console.log(myLinkedList)
-console.log(myLinkedList.PrintList())
-myLinkedList.Insert(3, 11)
-console.log(myLinkedList.PrintList())
+console.log(myLinkedList.printList())
+myLinkedList.insert(3, 11)
+console.log(myLinkedList.printList())
+myLinkedList.remove(3)
+console.log(myLinkedList.printList())
+myLinkedList.remove(1)
+console.log(myLinkedList.printList())
+
+
+class DoubleNode {
+    constructor(value) {
+        this.value = value,
+        this.next = null,
+        this.previous = null
+    }
+}
+
+class DoublyLinkedList {
+    constructor(value) {
+        this.head = {
+            value: value,
+            next: null,
+            previous: null
+        }
+        this.tail = this.head
+        this.length = 1
+    }
+    append(value) {
+        const newNode = new DoubleNode(value)
+        newNode.previous = this.tail
+        this.tail.next = newNode
+        this.tail = newNode
+        this.length++
+        return this
+    }
+    prepend(value) {
+        const newNode = new DoubleNode(value)
+        newNode.next = this.head
+        this.head.previous = newNode
+        this.head = newNode
+        this.length++
+        return this
+    }
+    printList() {
+        const array = []
+        let currentNode = this.head
+        while (currentNode !== null) {
+            array.push(currentNode.value)
+            currentNode = currentNode.next
+        }
+        return array
+    }
+    insert(index, value) {
+        if (index >= this.length) {
+            return this.append(value)
+
+        }
+        if (index === 0) {
+            return this.prepend(value)
+        }
+        const newNode = new DoubleNode(value)
+        const leader = this.traverseToIndex(index - 1)
+        const follower = leader.next
+        newNode.next = follower
+        newNode.previous = leader
+        follower.previous = newNode
+        leader.next = newNode
+        this.length++
+        return this.printList()
+    }
+    traverseToIndex(index) {
+        let counter = 0
+        let currentNode = this.head
+        while (counter !== index) {
+            currentNode = currentNode.next
+            counter++
+        }
+        return currentNode
+    }
+    remove(index) {
+        const leader = this.traverseToIndex(index - 1)
+        const nodeToRemove = leader.next
+        const follower = nodeToRemove.next
+        leader.next = follower
+        follower.previous = leader
+        this.length--
+    }
+}
+
+const myDoubleList = new DoublyLinkedList(5)
+console.log(myDoubleList)
+myDoubleList.append(6)
+console.log(myDoubleList)
+myDoubleList.append(7)
+console.log(myDoubleList)
+myDoubleList.prepend(4)
+console.log(myDoubleList)
+console.log(myDoubleList.printList())
+myDoubleList.insert(3, 11)
+console.log(myDoubleList.printList())
+myDoubleList.remove(3)
+console.log(myDoubleList.printList())
+myDoubleList.remove(1)
+console.log(myDoubleList.printList())
