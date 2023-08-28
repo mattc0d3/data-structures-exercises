@@ -16,26 +16,22 @@ class Queue {
     }
     enqueue(value) {
         const newNode = new Node(value)
-        newNode.next = this.last
-        this.last = newNode
-        if (this.isEmpty()) this.first = newNode
+        if (this.isEmpty()) {
+            this.first = newNode
+            this.last = newNode
+        } else {
+            this.last.next = newNode
+            this.last = newNode
+        }
         this.length++
         return this
     }
     dequeue() {
-        const newFirst = this.findNextInLine()
-        newFirst.next = null
-        this.first = newFirst
+        if (this.isEmpty()) return null
+        if (this.first === this.last) this.last = null
+        this.first = this.first.next
         this.length--
         return this
-    }
-    findNextInLine() {
-        let nextInLine = this.last
-        console.log(nextInLine)
-        for (let i = 0; i < this.length - 2; i++) {
-            nextInLine = nextInLine.next
-        }
-        return nextInLine
     }
     isEmpty() {
         return this.length === 0
@@ -55,3 +51,7 @@ myQueue.dequeue()
 console.log(myQueue.peek())
 myQueue.dequeue()
 console.log(myQueue.peek())
+console.log(myQueue)
+myQueue.dequeue()
+myQueue.dequeue()
+console.log(myQueue)
