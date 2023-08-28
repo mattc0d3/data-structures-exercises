@@ -18,7 +18,9 @@ class Stack {
         const newNode = new Node(value)
         newNode.next = this.top
         this.top = newNode
+        if(this.isEmpty()) this.bottom = newNode
         this.length++
+        return this
     }
     pop() {
         this.top = this.top.next
