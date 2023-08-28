@@ -23,8 +23,11 @@ class Stack {
         return this
     }
     pop() {
+        if (!this.top) return null
+        if (this.length === 1) this.bottom = null
         this.top = this.top.next
         this.length--
+        return this
     }
     isEmpty() {
         return this.length === 0
