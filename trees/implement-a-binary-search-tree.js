@@ -44,6 +44,7 @@ class BinarySearchTree {
         return false
     }
     remove(value) {
+        if (!this.root) return false
         let currentNode = this.root
         let parentNode = null
         while (currentNode.value !== value) {
@@ -57,10 +58,33 @@ class BinarySearchTree {
                 currentNode = currentNode.right
             }
         }
-        if (currentNode === parentNode.left) {
+        if (parentNode === null) this.root = currentNode.left
+        else if (currentNode === parentNode.left) {
             if (currentNode.right !== null) {
-                currentNode.right.left = currentNode.left
-                parentNode.left = currentNode.right
+
+                if (currentNode.right.left !== null) {
+                    // below implementation copied from course notes
+                    let leftmost = currentNode.right.left
+                    let leftmostParent = currentNode.right
+                    while (leftmost.left !== null) {
+                        leftmostParent = leftmost
+                        leftmost = leftmost.left
+                    }
+
+                    leftmostParent.left = leftmost.right
+                    leftmost.left = currentNode.left
+                    leftmost.right = currentNode.right
+
+                    if (parentNode === null) this.root = leftmost
+                    else {
+                        if (currentNode.value < parentNode.value) parentNode.left = leftmost
+                        else if (currentNode.value > parentNode.value) parentNode.right = leftmost
+                    }
+                } else {
+                    currentNode.right.left = currentNode.left
+                    parentNode.left = currentNode.right
+                }
+
             } else {
                 parentNode.left = currentNode.left
             }
@@ -74,6 +98,7 @@ class BinarySearchTree {
             }
 
         }
+        return true
     }
 }
 
