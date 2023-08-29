@@ -15,19 +15,23 @@ class BinarySearchTree {
         if (this.root === null) this.root = newNode
         else {
             let currentNode = this.root
-            while (currentNode !== null) {
+            while (true) {
                 if (newNode.value === currentNode.value) return "Value already exists"
                 else if (newNode.value < currentNode.value) {
-                    if (currentNode.left === null) currentNode.left = newNode
+                    if (currentNode.left === null) {
+                        currentNode.left = newNode
+                        return this
+                    }
                     currentNode = currentNode.left
                 }
                 else {
-                    if (currentNode.right === null) currentNode.right = newNode
+                    if (currentNode.right === null) {
+                        currentNode.right = newNode
+                        return this
+                    }
                     currentNode = currentNode.right
                 }
             }
-            currentNode = newNode
-            return this
         }
     }
     lookup(value) {
