@@ -37,7 +37,7 @@ class BinarySearchTree {
     lookup(value) {
         let currentNode = this.root
         while (currentNode !== null) {
-            if (currentNode.value === value) return true
+            if (currentNode.value === value) return currentNode
             if (value < currentNode.value) currentNode = currentNode.left
             else currentNode = currentNode.right
         }
