@@ -1,8 +1,8 @@
 class Node {
     constructor(value) {
         this.value = value,
-        this.left = null,
-        this.right = null
+            this.left = null,
+            this.right = null
     }
 }
 
@@ -43,6 +43,38 @@ class BinarySearchTree {
         }
         return false
     }
+    remove(value) {
+        let currentNode = this.root
+        let parentNode = null
+        while (currentNode.value !== value) {
+            if (currentNode === null) return "Value not found"
+            if (value < currentNode.value) {
+                parentNode = currentNode
+                currentNode = currentNode.left
+            }
+            else {
+                parentNode = currentNode
+                currentNode = currentNode.right
+            }
+        }
+        if (currentNode === parentNode.left) {
+            if (currentNode.right !== null) {
+                currentNode.right.left = currentNode.left
+                parentNode.left = currentNode.right
+            } else {
+                parentNode.left = currentNode.left
+            }
+        }
+        else {
+            if (currentNode.right !== null) {
+                currentNode.right.left = currentNode.left
+                parentNode.right = currentNode.right
+            } else {
+                parentNode.right = currentNode.left
+            }
+
+        }
+    }
 }
 
 const myTree = new BinarySearchTree()
@@ -56,6 +88,9 @@ myTree.insert(1)
 console.log(JSON.stringify(traverse(myTree.root)))
 console.log(myTree.lookup(15))
 console.log(myTree.lookup(16))
+myTree.remove(4)
+myTree.remove(6)
+console.log(JSON.stringify(traverse(myTree.root)))
 
 function traverse(node) {
     const tree = { value: node.value }
