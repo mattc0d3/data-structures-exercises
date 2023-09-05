@@ -3,9 +3,9 @@ function fibonacciIterative(n) {
 
     const sequence = [0, 1]
     for (let i = 2; i <= n; i++) {
-        sequence.push(sequence[sequence.length - 1] + sequence[sequence.length - 2])
+        sequence.push(sequence[i - 1] + sequence[i - 2])
     }
-    return sequence[sequence.length - 1]
+    return sequence[n]
 }
 
 function fibonacciRecursive(n) {
